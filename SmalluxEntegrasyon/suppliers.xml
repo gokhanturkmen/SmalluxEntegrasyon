@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<suppliers>
+  <supplier id="1" name="toptanciniz.com" site="http://www.toptanciniz.com" xmlurl="http://www.toptanciniz.com/WebService/remote/original.xml">
+    <tags>
+      <root type="tagname" cdata="false" default="">xml</root>
+      <item type="tagname" cdata="false" default="">product</item>
+      <id type="increment" cdata="false" default="100000"></id> <!-- increment tag value must be empty!!! -->
+      <stockCode type="null" cdata="true" default="ent_1_topt"></stockCode>
+      <label type="tagname" cdata="true" default="Ürün">name</label>
+      <status type="null" cdata="false" default="0"></status>
+      <brand type="null" cdata="true" default="Smallux"></brand>
+      <brandId type="selfclosing" cdata="false" default="1"></brandId>
+      <barcode type="null" cdata="false" default=""></barcode>
+      <mainCategory type="null" cdata="true" default="Aksesuar"></mainCategory>
+      <category type="null" cdata="true" default="Çantalar"></category>
+      <subCategory type="null" cdata="true" default="Erkek"></subCategory>
+      <price1 type="tagname" cdata="false" default="1.0">price</price1>
+      <tax type="tagname" cdata="false" default="18">tax</tax>
+      <currencyAbbr type="null" cdata="false" default="TL"></currencyAbbr>
+      <stockAmount type="tagname" cdata="false" default="0">quantity</stockAmount>
+      <stockType type="null" cdata="true" default="Adet"></stockType>
+      <warranty type="null" cdata="false" default="0"></warranty>
+      <picture1Path type="tagname" cdata="true" default="" parent="categories" child-level="1">image1</picture1Path> <!-- tagname types must always have a value -->
+      <picture2Path type="tagname" cdata="true" default="" parent="categories" child-level="1">image2</picture2Path>
+      <picture3Path type="tagname" cdata="true" default="" parent="categories" child-level="1">image3</picture3Path>
+      <picture4Path type="selfclosing" cdata="false"></picture4Path>
+      <picture5Path type="selfclosing" cdata="false"></picture5Path>
+      <picture6Path type="selfclosing" cdata="false"></picture6Path>
+      <picture7Path type="selfclosing" cdata="false"></picture7Path>
+      <picture8Path type="selfclosing" cdata="false"></picture8Path>
+      <dm3 type="null" cdata="false" default="0.000"></dm3>
+      <details type="tagname" cdata="true" default="">description</details>
+      <rebate type="null" cdata="false" default="0.000"></rebate>
+      <rebateType type="null" cdata="false" default="1"></rebateType>
+      <shortdetails type="null" cdata="true" default=""></shortdetails>
+      <title type="null" cdata="true" default=""></title>
+      <keywords type="null" cdata="true" default=""></keywords>
+      <description type="null" cdata="true" default=""></description>
+      <searchKeywords type="null" cdata="true" default=""></searchKeywords>
+    </tags>
+  </supplier>
+</suppliers>
