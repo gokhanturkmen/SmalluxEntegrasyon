@@ -76,7 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Default.aspx" />
+    <Content Include="Global.asax" />
     <Content Include="integrate.aspx" />
+    <Content Include="Services\toptanciniz\doNotDelete.txt" />
     <Content Include="suppliers.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -91,6 +93,9 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
     <Compile Include="integrate.aspx.cs">
       <DependentUpon>integrate.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -99,6 +104,8 @@
       <DependentUpon>integrate.aspx</DependentUpon>
     </Compile>
     <Compile Include="Logic\SupplierOps.cs" />
+    <Compile Include="Logic\Timer.cs" />
+    <Compile Include="Logic\Updater.cs" />
     <Compile Include="Logic\XmlBuilder.cs" />
     <Compile Include="Model\Supplier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

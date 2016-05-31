@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text;
+using System.Web;
 using System.Xml.Linq;
 
 namespace SmalluxEntegrasyon
@@ -16,7 +17,7 @@ namespace SmalluxEntegrasyon
 
                 if (int.TryParse(sId, out s))
                 {
-                    string settingsFile = Path.Combine(Server.MapPath("~") + "suppliers.xml");
+                    string settingsFile = Path.Combine(HttpRuntime.AppDomainAppPath, "/suppliers.xml");
                     string xml = Logic.XmlBuilder.Build(s, Path.Combine(settingsFile));
                     if (xml != null)
                     {

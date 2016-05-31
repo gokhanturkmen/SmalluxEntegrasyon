@@ -12,6 +12,8 @@ namespace SmalluxEntegrasyon.Logic
 {
     public class XmlBuilder
     {
+        private static readonly object _lockObj = new object();
+
         public static string Build(int supplierId, string settingsFile)
         {
             //Get supplier xml options
@@ -184,16 +186,19 @@ namespace SmalluxEntegrasyon.Logic
 
         private static string DownloadXml(string xmlURL)
         {
-            string localTemp = Path.Combine(HttpContext.Current.Server.MapPath("~") + "/TempFiles/" + "temp");
-            int i = 0;
-            while (File.Exists(localTemp + i.ToString() + ".xml"))
+            lock (_lockObj)
             {
-                i++;
+                string localTemp = Path.Combine(HttpRuntime.AppDomainAppPath, "TempFiles/temp");
+                int i = 0;
+                while (File.Exists(localTemp + i.ToString() + ".xml"))
+                {
+                    i++;
+                }
+                localTemp += i.ToString() + ".xml";
+                WebClient Client = new WebClient();
+                Client.DownloadFile(xmlURL, localTemp);
+                return localTemp;
             }
-            localTemp += i.ToString() + ".xml";
-            WebClient Client = new WebClient();
-            Client.DownloadFile(xmlURL, localTemp);
-            return localTemp;
         }
     }
 }
