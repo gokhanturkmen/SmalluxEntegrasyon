@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Web;
-using System.Xml.Linq;
 
 namespace SmalluxEntegrasyon.Logic
 {
@@ -31,12 +30,14 @@ namespace SmalluxEntegrasyon.Logic
                     string settingsFile = Path.Combine(HttpRuntime.AppDomainAppPath, "suppliers.xml");
                     string xml = XmlBuilder.Build(1, settingsFile);
                     string path = Path.Combine(HttpRuntime.AppDomainAppPath, "Services/toptanciniz/products.xml");
-                    if (!File.Exists(path))
+                    if (File.Exists(path))
                     {
-                        File.Create(path);
+                        File.Delete(path);
                     }
-                    var doc = XDocument.Parse(xml);
-                    doc.Save(path);
+                    using (var sw = new StreamWriter(path))
+                    {
+                        sw.Write(xml);
+                    }
                 }
             }
             catch (Exception ex)

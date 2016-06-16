@@ -17,7 +17,7 @@ namespace SmalluxEntegrasyon
 
                 if (int.TryParse(sId, out s))
                 {
-                    string settingsFile = Path.Combine(HttpRuntime.AppDomainAppPath, "/suppliers.xml");
+                    string settingsFile = Path.Combine(HttpRuntime.AppDomainAppPath, "suppliers.xml");
                     string xml = Logic.XmlBuilder.Build(s, Path.Combine(settingsFile));
                     if (xml != null)
                     {

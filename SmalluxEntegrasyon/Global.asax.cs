@@ -7,7 +7,7 @@ namespace SmalluxEntegrasyon
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            Logic.Updater.Start(10000);
+            Logic.Updater.Start(600000);
         }
 
         protected void Session_Start(object sender, EventArgs e)

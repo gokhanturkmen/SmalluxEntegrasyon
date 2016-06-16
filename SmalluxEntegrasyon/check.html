@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+    <link href="css/styles.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="wrapper">
+        <div class="block controller">Controlling .</div>
+        <div class="block result" style="text-align:center;"></div>
+        <div class="block download hidden">
+            <a href="#">Open / Download File</a>
+        </div>
+        <div class="block xml hidden"></div>
+    </div>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <script>
+        var file = "/services/toptanciniz/products.xml";
+        $(function () {
+            setInterval(function () {
+                var elm = $(".controller");
+                switch (elm.text()) {
+                    case "Controlling .":
+                        elm.text("Controlling ..");
+                        break;
+                    case "Controlling ..":
+                        elm.text("Controlling ...");
+                        break;
+                    case "Controlling ...":
+                        elm.text("Controlling ....");
+                        break;
+                    case "Controlling ....":
+                        elm.text("Controlling .....");
+                        break;
+                    case "Controlling .....":
+                        elm.text("Controlling .");
+                        break;
+                }
+            }, 500);
+
+            setInterval(function () {
+                $.ajax({
+                    type: "GET",
+                    url: file,
+                    cache: false,
+                    dataType: "text",
+                    success: function (xml) {
+                        $(".result").text("Found!").removeClass("hidden");
+                        $(".download").removeClass("hidden").children("a").prop("href", file);
+                        $(".xml").text(xml).removeClass("hidden");
+                        
+                    },
+                    error: function (d) {
+                        $(".download, .xml").addClass("hidden");
+                        $(".result").text("Not Found");
+                        console.log(d);
+                    }
+                });
+            }, 3000);
+        })
+    </script>
+</body>
+</html>

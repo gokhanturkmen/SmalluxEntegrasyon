@@ -6,7 +6,6 @@ using System.Text;
 using System.Web;
 using System.Xml.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace SmalluxEntegrasyon.Logic
 {
@@ -39,25 +38,25 @@ namespace SmalluxEntegrasyon.Logic
                     {
                         if (tag.Value == "")
                         {
-                            var tmp = tag.Default;
-                            var num = 0;
-                            if (tag.Type == TagTypes.TagName)
-                            {
-                                xml.Append("<" + tag.Name + ">");
-                                
-                                xml.AppendLine(" </" + tag.Name + ">");
-                            }
                             if (tag.Type == TagTypes.SelfClosing)
                             {
                                 xml.AppendLine("<" + tag.Name + " />");
                                 continue;
                             }
-                            xml.Append("<" + tag.Name + " >");
-                            if (tag.Type == TagTypes.Increment && int.TryParse(tag.Default, out num))
+
+                            xml.Append("<" + tag.Name + ">");
+                            var tmp = tag.Default;
+                            var num = 0;
+                            if (tag.Type == TagTypes.TagName)
+                            {
+                                xml.AppendLine("</" + tag.Name + ">");
+                                continue;
+                            }
+                            else if (tag.Type == TagTypes.Increment && int.TryParse(tag.Default, out num))
                             {
                                 num += incr;
                                 incr++;
-                                tmp = (num).ToString();
+                                tmp = Escape((num).ToString());
                             }
                             if (tag.CData)
                             {
@@ -70,23 +69,7 @@ namespace SmalluxEntegrasyon.Logic
                             xml.AppendLine("</" + tag.Name + ">");
                             continue;
                         }
-                        //if (tag.Type == TagTypes.Combine)             // to be implemented
-                        //{
-                        //    xml.Append("<" + tag.Name + ">");
-                        //    var values = new List<string>();
-                            
-                        //    if (tag.CData)
-                        //    {
-                        //        xml.Append("<![CDATA[" + tag.Default + "]]>");
-                        //    }
-                        //    else
-                        //    {
-                        //        xml.Append(tag.Default);
-                        //    }
-                        //    xml.AppendLine("</" + tag.Name + ">");
-                        //    continue;
-                        //}
-                        if (p.Element(tag.Value) == null && tag.Parent == "") continue; 
+                        if (p.Element(tag.Value) == null && tag.Parent == "") continue;
                         xml.Append("<" + tag.Name + ">");
                         string value = "";
                         switch (tag.Type)
@@ -103,18 +86,13 @@ namespace SmalluxEntegrasyon.Logic
                                 {
                                     value = p.Element(tag.Value).Value;
                                 }
-                                if (value == "")
-                                {
-                                    xml.Append("<" + tag.Name + " />");     //self-close
-                                    continue;
-                                }
                                 if (tag.CData)
                                 {
-                                    xml.Append("<![CDATA[" + value + "]]>");
+                                    xml.Append("<![CDATA[" + Escape(value) + "]]>");
                                 }
                                 else
                                 {
-                                    xml.Append(value);
+                                    xml.Append(Escape(value));
                                 }
                                 break;
                             case TagTypes.Combine:
@@ -125,7 +103,7 @@ namespace SmalluxEntegrasyon.Logic
                                     foreach (var elm in elms)
                                     {
                                         var subValue = p.Element(sp.GetTagByName(elm).Value).Value.Trim(tag.CombineChar[0]);
-                                        xml.Append(p.Element(sp.GetTagByName(elm).Value).Value + tag.CombineChar[0]);
+                                        xml.Append(Escape(p.Element(sp.GetTagByName(elm).Value).Value + tag.CombineChar[0]));
                                     }
                                     xml.Length--;
                                     xml.Append("]]>");
@@ -135,7 +113,7 @@ namespace SmalluxEntegrasyon.Logic
                                     foreach (var elm in elms)
                                     {
                                         var subValue = p.Element(sp.GetTagByName(elm).Value).Value.Trim(tag.CombineChar[0]);
-                                        xml.Append(p.Element(sp.GetTagByName(elm).Value).Value + tag.CombineChar[0]);
+                                        xml.Append(Escape(p.Element(sp.GetTagByName(elm).Value).Value + tag.CombineChar[0]));
                                     }
                                 }
                                 break;
@@ -145,15 +123,15 @@ namespace SmalluxEntegrasyon.Logic
                                 value = string.Join(tag.CombineChar, sValue);
                                 if (tag.CData)
                                 {
-                                    xml.Append("<![CDATA[" + value + "]]>");
+                                    xml.Append("<![CDATA[" + Escape(value) + "]]>");
                                 }
                                 else
                                 {
-                                    xml.Append(value);
+                                    xml.Append(Escape(value));
                                 }
                                 break;
                             case TagTypes.Increment:
-                                
+
                                 break;
                             case TagTypes.SelfClosing:
 
@@ -176,11 +154,16 @@ namespace SmalluxEntegrasyon.Logic
 
         }
 
+        private static string Escape(string text) { return text.Replace("&", "&amp;").Replace("<", "&lt;"); }
+
         private static void DeleteFile(string localTempXML)
         {
-            if (File.Exists(localTempXML)) ;
+            lock (_lockObj)
             {
-                File.Delete(localTempXML);
+                if (File.Exists(localTempXML)) ;
+                {
+                    File.Delete(localTempXML);
+                }
             }
         }
 
@@ -200,5 +183,7 @@ namespace SmalluxEntegrasyon.Logic
                 return localTemp;
             }
         }
+
+
     }
 }

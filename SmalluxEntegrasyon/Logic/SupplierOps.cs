@@ -27,6 +27,7 @@ namespace SmalluxEntegrasyon.Logic
                     try
                     {
                         var tag = sp.GetTagByName(item.Name.LocalName);
+                        if (tag == null) continue;
                         var type = item.Attribute("type").Value.Trim().ToLower();
                         switch (type)
                         {

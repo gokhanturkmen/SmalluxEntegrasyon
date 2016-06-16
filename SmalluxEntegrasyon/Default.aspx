@@ -54,6 +54,7 @@
     <div class="wrapper">
         <span class="block">Enter what is necessary or simply close the page...</span>
         <a href="integrate.aspx?supplier=1" class="block hidden">Toptancınız.com XML</a>
+        <a href="check.html" class="block hidden">Check</a>
     </div>
     </form>
     <script>
